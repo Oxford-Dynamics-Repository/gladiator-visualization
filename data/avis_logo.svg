@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="262px" height="78px" viewBox="0 0 262 78" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Avis logo combined</title>
+    <g id="Avis-v0.5" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="0.0-Sign-In---email" transform="translate(-17, -36)">
+            <g id="Avis-logo-combined" transform="translate(17, 36)">
+                <rect id="Blocker" fill="#FFFFFF" opacity="0" x="0" y="11" width="262" height="67"></rect>
+                <g id="AVIS" transform="translate(78, 0)">
+                    <path d="M90.1272085,71 L90.1272085,64.9534884 L105.321435,64.953 L105.321435,25.046 L89.5194346,25.0465116 L89.5194346,19 L128.416961,19 L128.416961,25.0465116 L112.614435,25.046 L112.614435,64.953 L129.024735,64.9534884 L129.024735,71 L90.1272085,71 Z" id="Combined-Shape" fill="#000000"></path>
+                    <polyline id="Path-3-Copy" stroke="#000000" stroke-width="6.04651163" stroke-linejoin="bevel" points="2 70.0930233 2 38.9534884 19.0176678 20.2093023 35.4275618 38.9534884 35.4275618 70.0930233"></polyline>
+                    <polyline id="Path-3-Copy-2" stroke="#000000" stroke-width="6.04651163" stroke-linejoin="bevel" transform="translate(64.2968, 44.1512) scale(1, -1) translate(-64.2968, -44.1512)" points="47.5830389 69.0930233 47.5830389 37.9534884 64.6007067 19.2093023 81.0106007 37.9534884 81.0106007 69.0930233"></polyline>
+                    <rect id="Rectangle-Copy-4" fill="#000000" x="3.2155477" y="52.255814" width="31.6042403" height="6.04651163"></rect>
+                    <polyline id="Path-3" stroke="#000000" stroke-width="6.04651163" stroke-linejoin="bevel" points="173.392226 26.7740864 173.392226 22.627907 141.180212 22.627907 141.180212 45.3023256 174 45.3023256 174 67.9767442 141.180212 67.9767442 141.180212 60.9800664"></polyline>
+                </g>
+                <g id="Logo" transform="translate(7, 17)" stroke="#000000" stroke-width="2.14365003">
+                    <circle id="Oval" cx="29" cy="16.0487811" r="14.0304872"></circle>
+                    <circle id="Oval" transform="translate(38.1579, 19.8421) rotate(45) translate(-38.1579, -19.8421)" cx="38.1578947" cy="19.8421053" r="14.0304872"></circle>
+                    <circle id="Oval" transform="translate(41.9512, 29) rotate(90) translate(-41.9512, -29)" cx="41.9512189" cy="29" r="14.0304872"></circle>
+                    <circle id="Oval" transform="translate(38.1579, 38.1579) rotate(135) translate(-38.1579, -38.1579)" cx="38.1578947" cy="38.1578947" r="14.0304872"></circle>
+                    <circle id="Oval" transform="translate(29, 41.9512) rotate(180) translate(-29, -41.9512)" cx="29" cy="41.9512189" r="14.0304872"></circle>
+                    <circle id="Oval" transform="translate(19.8421, 38.1579) rotate(225) translate(-19.8421, -38.1579)" cx="19.8421053" cy="38.1578947" r="14.0304872"></circle>
+                    <circle id="Oval" transform="translate(16.0488, 29) rotate(270) translate(-16.0488, -29)" cx="16.0487811" cy="29" r="14.0304872"></circle>
+                    <circle id="Oval" transform="translate(19.8421, 19.8421) rotate(315) translate(-19.8421, -19.8421)" cx="19.8421053" cy="19.8421053" r="14.0304872"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
