@@ -1,0 +1,299 @@
+[
+	{
+		"hlaInstanceName": "VRFFederateHandle<5>:1082",
+		"damageState": "NoDamage",
+		"forceIdentifier": "Friendly",
+		"marking": "F-117A 3",
+		"entityType": "1.2.225.2.11.0.0",
+		"entityIdentifier": "1.3001.129",
+		"spatial": {
+			"position": {
+				"WGS84": {
+					"latitude": 55.7436066654913,
+					"longitude": -0.47501856814779564,
+					"altitude": 87241.86797298363
+				},
+				"ECEF": {
+					"x": 3599206.3749854406,
+					"y": -29840.400915773134,
+					"z": 5249684.740809822
+				}
+			},
+			"orientation": {
+				"phi": -2.7086806,
+				"psi": 0.8326643,
+				"theta": 0.42621848
+			},
+			"velocityVector": {
+				"xVelocity": 126.08157,
+				"yVelocity": 138.60114,
+				"zVelocity": -85.07441
+			}
+		},
+		"lastSpatialUpdate": "2024-04-11 05:39:57.454"
+	},
+	{
+		"hlaInstanceName": "VRFFederateHandle<5>:1066",
+		"damageState": "NoDamage",
+		"forceIdentifier": "Friendly",
+		"marking": "F-117A 4",
+		"entityType": "1.2.225.2.11.0.0",
+		"entityIdentifier": "1.3001.112",
+		"spatial": {
+			"position": {
+				"WGS84": {
+					"latitude": 55.8513611903195,
+					"longitude": -0.20410761533086125,
+					"altitude": 87262.51410472213
+				},
+				"ECEF": {
+					"x": 3589382.7881561173,
+					"y": -12786.691562771084,
+					"z": 5256430.503731462
+				}
+			},
+			"orientation": {
+				"phi": -2.719099,
+				"psi": 0.8154286,
+				"theta": 0.4338099
+			},
+			"velocityVector": {
+				"xVelocity": 128.005,
+				"yVelocity": 135.93346,
+				"zVelocity": -86.49457
+			}
+		},
+		"lastSpatialUpdate": "2024-04-11 05:39:57.454"
+	},
+	{
+		"hlaInstanceName": "VRFFederateHandle<5>:1071",
+		"damageState": "NoDamage",
+		"forceIdentifier": "Friendly",
+		"marking": "F-117A 5",
+		"entityType": "1.2.225.2.11.0.0",
+		"entityIdentifier": "1.3001.118",
+		"spatial": {
+			"position": {
+				"WGS84": {
+					"latitude": 56.00895506794757,
+					"longitude": -0.5918294926390414,
+					"altitude": 94019.73480894972
+				},
+				"ECEF": {
+					"x": 3574742.5063994564,
+					"y": -36926.16294615971,
+					"z": 5266360.28435009
+				}
+			},
+			"orientation": {
+				"phi": 2.6405935,
+				"psi": -1.0438678,
+				"theta": 0.32871726
+			},
+			"velocityVector": {
+				"xVelocity": 97.94137,
+				"yVelocity": -168.34181,
+				"zVelocity": -66.43056
+			}
+		},
+		"lastSpatialUpdate": "2024-04-11 05:39:57.454"
+	},
+	{
+		"hlaInstanceName": "VRFFederateHandle<5>:1087",
+		"damageState": "NoDamage",
+		"forceIdentifier": "Friendly",
+		"marking": "F-117A 7",
+		"entityType": "1.2.225.2.11.0.0",
+		"entityIdentifier": "1.3001.134",
+		"spatial": {
+			"position": {
+				"WGS84": {
+					"latitude": 56.16783928651682,
+					"longitude": 0.6143470780278217,
+					"altitude": 87252.9626770998
+				},
+				"ECEF": {
+					"x": 3559977.5274167066,
+					"y": 38172.892127970634,
+					"z": 5276134.598246978
+				}
+			},
+			"orientation": {
+				"phi": -2.7062118,
+				"psi": 0.87022096,
+				"theta": 0.41244346
+			},
+			"velocityVector": {
+				"xVelocity": 121.532555,
+				"yVelocity": 144.11975,
+				"zVelocity": -82.48532
+			}
+		},
+		"lastSpatialUpdate": "2024-04-11 05:39:57.454"
+	},
+	{
+		"hlaInstanceName": "VRFFederateHandle<5>:1070",
+		"damageState": "NoDamage",
+		"forceIdentifier": "Friendly",
+		"marking": "F-117A 1",
+		"entityType": "1.2.225.2.11.0.0",
+		"entityIdentifier": "1.3001.117",
+		"spatial": {
+			"position": {
+				"WGS84": {
+					"latitude": 55.45668904438407,
+					"longitude": -1.1308301150089173,
+					"altitude": 87231.99213133269
+				},
+				"ECEF": {
+					"x": 3624987.432258457,
+					"y": -71554.6126229776,
+					"z": 5231633.162078448
+				}
+			},
+			"orientation": {
+				"phi": -2.699987,
+				"psi": 0.8339961,
+				"theta": 0.42483482
+			},
+			"velocityVector": {
+				"xVelocity": 125.97569,
+				"yVelocity": 138.85599,
+				"zVelocity": -84.81531
+			}
+		},
+		"lastSpatialUpdate": "2024-04-11 05:39:57.454"
+	},
+	{
+		"hlaInstanceName": "VRFFederateHandle<5>:1093",
+		"damageState": "NoDamage",
+		"forceIdentifier": "Friendly",
+		"marking": "F-117A 2",
+		"entityType": "1.2.225.2.11.0.0",
+		"entityIdentifier": "1.3001.140",
+		"spatial": {
+			"position": {
+				"WGS84": {
+					"latitude": 55.60164864325611,
+					"longitude": -0.7749071329341402,
+					"altitude": 87277.76354615598
+				},
+				"ECEF": {
+					"x": 3612055.404358743,
+					"y": -48854.87544943281,
+					"z": 5240770.35610642
+				}
+			},
+			"orientation": {
+				"phi": -2.7063546,
+				"psi": 0.8289852,
+				"theta": 0.42758605
+			},
+			"velocityVector": {
+				"xVelocity": 126.51199,
+				"yVelocity": 138.05043,
+				"zVelocity": -85.33047
+			}
+		},
+		"lastSpatialUpdate": "2024-04-11 05:39:57.454"
+	},
+	{
+		"hlaInstanceName": "VRFFederateHandle<5>:1074",
+		"damageState": "NoDamage",
+		"forceIdentifier": "Friendly",
+		"marking": "F-117A 6",
+		"entityType": "1.2.225.2.11.0.0",
+		"entityIdentifier": "1.3001.121",
+		"spatial": {
+			"position": {
+				"WGS84": {
+					"latitude": 56.06639586161378,
+					"longitude": 0.3446927722149735,
+					"altitude": 87262.97118098137
+				},
+				"ECEF": {
+					"x": 3569496.8841632274,
+					"y": 21474.437220508826,
+					"z": 5269836.24846614
+				}
+			},
+			"orientation": {
+				"phi": -2.7331076,
+				"psi": 0.7977422,
+				"theta": 0.44157457
+			},
+			"velocityVector": {
+				"xVelocity": 129.91628,
+				"yVelocity": 133.16362,
+				"zVelocity": -87.941505
+			}
+		},
+		"lastSpatialUpdate": "2024-04-11 05:39:57.454"
+	},
+	{
+		"hlaInstanceName": "VRFFederateHandle<5>:1090",
+		"damageState": "NoDamage",
+		"forceIdentifier": "Friendly",
+		"marking": "F-117A 8",
+		"entityType": "1.2.225.2.11.0.0",
+		"entityIdentifier": "1.3001.137",
+		"spatial": {
+			"position": {
+				"WGS84": {
+					"latitude": 56.6904707703826,
+					"longitude": 0.9553007594807694,
+					"altitude": 87241.24409672801
+				},
+				"ECEF": {
+					"x": 3511194.4870574116,
+					"y": 58548.07532225046,
+					"z": 5308321.839725737
+				}
+			},
+			"orientation": {
+				"phi": -2.6087325,
+				"psi": 1.9771134,
+				"theta": -0.24461928
+			},
+			"velocityVector": {
+				"xVelocity": -78.90795,
+				"yVelocity": 183.39659,
+				"zVelocity": 49.836952
+			}
+		},
+		"lastSpatialUpdate": "2024-04-11 05:39:57.454"
+	},
+	{
+		"hlaInstanceName": "VRFFederateHandle<5>:1078",
+		"damageState": "NoDamage",
+		"forceIdentifier": "Friendly",
+		"marking": "F-117A 9",
+		"entityType": "1.2.225.2.11.0.0",
+		"entityIdentifier": "1.3001.125",
+		"spatial": {
+			"position": {
+				"WGS84": {
+					"latitude": 56.80445983610541,
+					"longitude": 0.14296446870709992,
+					"altitude": 87278.28539880874
+				},
+				"ECEF": {
+					"x": 3501054.5961121223,
+					"y": 8735.851981900089,
+					"z": 5315284.155957752
+				}
+			},
+			"orientation": {
+				"phi": 2.59322,
+				"psi": -1.8789093,
+				"theta": -0.19738743
+			},
+			"velocityVector": {
+				"xVelocity": -61.192303,
+				"yVelocity": -192.27962,
+				"zVelocity": 40.355217
+			}
+		},
+		"lastSpatialUpdate": "2024-04-11 05:39:57.454"
+	}
+]

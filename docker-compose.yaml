@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  influxdb:
+    image: influxdb
+    container_name: gladiator_db
+    ports:
+      - "8086:8086"  # Expose InfluxDB HTTP API
+    volumes:
+      - ./influxdb-data:/var/lib/influxdb  # Mount volume for persisting data
+    environment:
+      - INFLUXDB_DB=gladiator_db  # Set default database name
+      - INFLUXDB_ADMIN_ENABLED=true  # Enable admin interface
+      - INFLUXDB_ADMIN_USER=admin  # Set admin username
+      - INFLUXDB_ADMIN_PASSWORD=51a5cf3f398043f195b9237611e8f2e6  # Set admin password
+
+      - INFLUXDB_BUCKET=GLADIATOR
+      - INFLUXDB_ORG=oxdynamics
+      - INFLUXDB_USERNAME=oxd_user
+      - INFLUXDB_PASSWORD=51a5cf3f398043f195b9237611e8f2e6
