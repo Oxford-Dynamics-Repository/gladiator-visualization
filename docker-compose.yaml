@@ -14,7 +14,7 @@ services:
       - INFLUXDB_ADMIN_USER=admin  # Set admin username
       - INFLUXDB_ADMIN_PASSWORD=51a5cf3f398043f195b9237611e8f2e6  # Set admin password
 
-      - INFLUXDB_BUCKET=GLADIATOR
-      - INFLUXDB_ORG=oxdynamics
       - INFLUXDB_USERNAME=oxd_user
       - INFLUXDB_PASSWORD=51a5cf3f398043f195b9237611e8f2e6
+      - INFLUXDB_ORG=oxdynamics
+      - INFLUXDB_BUCKET=GLADIATOR
