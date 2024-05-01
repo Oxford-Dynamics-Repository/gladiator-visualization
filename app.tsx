@@ -10,41 +10,17 @@ import React, { useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Map } from 'react-map-gl/maplibre'
 import DeckGL from '@deck.gl/react'
-import { FlyToInterpolator } from '@deck.gl/core'
 import { ScenegraphLayer, ScatterplotLayer, GeoJsonLayer } from 'deck.gl'
 import { Input, Tooltip, Button, List } from 'antd'
 import { SearchOutlined, UpSquareOutlined } from '@ant-design/icons'
-import OpenAI from 'openai'
 
+import { openai, MAP_STYLE, INITIAL_VIEW_STATE, FLIGHT_ZONE } from './var.tsx'
 import {
   computeLocalTangentPlaneRotationMatrix,
   applyRotationMatrix,
-  computeRayTracing,
+  computeRayCasting,
 } from './utils.tsx'
 import Polygon from './data/Checkpoints_3.json'
-
-const openai = new OpenAI({
-  apiKey: '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',
-  dangerouslyAllowBrowser: true,
-})
-
-const MAP_STYLE =
-  'https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json'
-
-const INITIAL_VIEW_STATE = {
-  latitude: 56.5,
-  longitude: -0.7,
-  zoom: 5,
-  transitionDuration: 2000,
-  transitionInterpolator: new FlyToInterpolator(),
-}
-
-const FLIGHT_ZONE = [
-  [-1.5, 56.3],
-  [1.4, 56.7],
-  [3.4, 55.5],
-  [0.1, 54.2],
-]
 
 export default function App({
   mapStyle = MAP_STYLE,
@@ -146,6 +122,7 @@ export default function App({
     setPlaneData(aircrafts)
   }
 
+  var firstDisplay = true
   const fetchCriticalAircraft = async () => {
     const response = await fetch(
       'http://johanndiep:9900/api/objects/aircrafts/VRFFederateHandle<5>:1082',
@@ -154,7 +131,7 @@ export default function App({
     const aircraft = await response.json()
     setCriticialPlaneData([aircraft])
 
-    const inside = computeRayTracing(
+    const inside = computeRayCasting(
       [
         aircraft.spatial.position.WGS84.longitude,
         aircraft.spatial.position.WGS84.latitude,
@@ -162,8 +139,9 @@ export default function App({
       FLIGHT_ZONE,
     )
 
-    if (inside) {
+    if (inside && firstDisplay) {
       handleAlert()
+      firstDisplay = false
     }
   }
 

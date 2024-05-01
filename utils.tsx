@@ -91,7 +91,7 @@ export function applyRotationMatrix(
 }
 
 /*
-  Function to compute ray tracing to determine if a point is inside a polygon.
+  Function to compute ray casting to determine if a point is inside a polygon.
   Works within a small region, otherwise require spherical interpolation.
 
   Inputs:
@@ -101,7 +101,7 @@ export function applyRotationMatrix(
   Returns:
    - A boolean indicating whether the point is inside the polygon (true) or outside (false).
 */
-export function computeRayTracing(point: any, polygon: any) {
+export function computeRayCasting(point: any, polygon: any) {
   const x = point[0]
   const y = point[1]
 
