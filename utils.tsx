@@ -15,10 +15,7 @@
   Returns:
    - A 3x3 array representing the rotation matrix for the local tangent plane.
 */
-export function computeLocalTangentPlaneRotationMatrix(
-  latitude: number,
-  longitude: number,
-) {
+export function computeLocalTangentPlaneRotationMatrix(latitude: number, longitude: number) {
   // Convert latitude and longitude from degrees to radians
   const phi = latitude * (Math.PI / 180)
   const lambda = longitude * (Math.PI / 180)
@@ -60,10 +57,7 @@ export function computeLocalTangentPlaneRotationMatrix(
    - An array containing the rotated Euler angles 
      [rotatedRoll, rotatedPitch, rotatedYaw] in degrees.
 */
-export function applyRotationMatrix(
-  rotationMatrix: number[][],
-  eulerAngles: number[],
-) {
+export function applyRotationMatrix(rotationMatrix: number[][], eulerAngles: number[]) {
   // Convert Euler angles from degrees to radians
   const [roll, pitch, yaw] = eulerAngles.map((angle) => angle * (Math.PI / 180))
 
@@ -88,4 +82,33 @@ export function applyRotationMatrix(
 
   // Return the rotated Euler angles in degrees
   return [rotatedRollDeg, rotatedPitchDeg, rotatedYawDeg]
+}
+
+/*
+  Function to compute ray tracing to determine if a point is inside a polygon.
+  Works within a small region, otherwise require spherical interpolation.
+
+  Inputs:
+   - point: The point to be tested represented as [x, y].
+   - polygon: The polygon represented as an array of vertices.
+
+  Returns:
+   - A boolean indicating whether the point is inside the polygon (true) or outside (false).
+*/
+export function computeRayTracing(point: any, polygon: any) {
+  const x = point[0];
+  const y = point[1];
+
+  let inside = false;
+  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+    const xi = polygon[i][0];
+    const yi = polygon[i][1];
+    const xj = polygon[j][0];
+    const yj = polygon[j][1];
+
+    const intersect = ((yi > y) !== (yj > y)) && (x < ((xj - xi) * (y - yi)) / (yj - yi) + xi);
+    
+    if (intersect) inside = !inside;
+  }
+  return inside;
 }

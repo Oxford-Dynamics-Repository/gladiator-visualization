@@ -1,8 +1,9 @@
 /* 
   Oxford Dynamics - May 2024
 
-  This component represents the main application, integrating various layers and functionalities.
-  It displays an interactive map showing air traffic simulation and allows users to query AI for information.
+  This component represents the main application, integrating various 
+  layers and functionalities. It displays an interactive map showing air 
+  traffic simulation and allows users to query AI for information.
 */
 
 import React, { useState, useEffect } from 'react'
@@ -10,14 +11,15 @@ import { createRoot } from 'react-dom/client'
 import { Map } from 'react-map-gl/maplibre'
 import DeckGL from '@deck.gl/react'
 import { FlyToInterpolator } from '@deck.gl/core'
-import { ScenegraphLayer, GeoJsonLayer, ScatterplotLayer } from 'deck.gl'
-import { Input, Tooltip, Button, Avatar, List } from 'antd'
+import { ScenegraphLayer, ScatterplotLayer } from 'deck.gl'
+import { Input, Tooltip, Button, List } from 'antd'
 import { SearchOutlined, UpSquareOutlined } from '@ant-design/icons'
 import OpenAI from 'openai'
 
 import {
   computeLocalTangentPlaneRotationMatrix,
   applyRotationMatrix,
+  computeRayTracing,
 } from './utils.tsx'
 
 const openai = new OpenAI({
