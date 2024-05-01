@@ -11,7 +11,7 @@ import { createRoot } from 'react-dom/client'
 import { Map } from 'react-map-gl/maplibre'
 import DeckGL from '@deck.gl/react'
 import { FlyToInterpolator } from '@deck.gl/core'
-import { ScenegraphLayer, ScatterplotLayer } from 'deck.gl'
+import { ScenegraphLayer, ScatterplotLayer, GeoJsonLayer } from 'deck.gl'
 import { Input, Tooltip, Button, List } from 'antd'
 import { SearchOutlined, UpSquareOutlined } from '@ant-design/icons'
 import OpenAI from 'openai'
@@ -21,6 +21,7 @@ import {
   applyRotationMatrix,
   computeRayTracing,
 } from './utils.tsx'
+import Polygon from './data/Checkpoints_3.json'
 
 const openai = new OpenAI({
   apiKey: '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',
@@ -37,6 +38,13 @@ const INITIAL_VIEW_STATE = {
   transitionDuration: 2000,
   transitionInterpolator: new FlyToInterpolator(),
 }
+
+const FLIGHT_ZONE = [
+  [-1.5, 56.3],
+  [1.4, 56.7],
+  [3.4, 55.5],
+  [0.1, 54.2],
+]
 
 export default function App({
   mapStyle = MAP_STYLE,
@@ -106,31 +114,29 @@ export default function App({
     }
   }
 
-  const handleKeyPress = async (event: any) => {
-    if (event.keyCode === 106) {
-      setShowResults(true)
-      setTitle('Automated Notification')
-      setAnswer(
-        'AVIS has detected a malicious aircraft maneuver. ' +
-          'The aircraft has veered outside its designated flight zone. ' +
-          'Please investigate immediately.',
-      )
+  const handleAlert = async () => {
+    setShowResults(true)
+    setTitle('Automated Notification')
+    setAnswer(
+      'AVIS has detected a malicious aircraft maneuver. ' +
+        'The aircraft has veered outside its designated flight zone. ' +
+        'Please investigate immediately.',
+    )
 
-      const response = await fetch(
-        'http://johanndiep:9900/api/objects/aircrafts/VRFFederateHandle<5>:1078',
-      )
-      const aircraft = await response.json()
+    const response = await fetch(
+      'http://johanndiep:9900/api/objects/aircrafts/VRFFederateHandle<5>:1078',
+    )
+    const aircraft = await response.json()
 
-      const updatedViewState = {
-        ...viewState,
-        latitude: aircraft.spatial.position.WGS84.latitude + 0.5,
-        longitude: aircraft.spatial.position.WGS84.longitude,
-        zoom: 6,
-      }
-
-      setViewState(updatedViewState)
-      setCriticalPlaneVisible(true)
+    const updatedViewState = {
+      ...viewState,
+      latitude: aircraft.spatial.position.WGS84.latitude + 0.5,
+      longitude: aircraft.spatial.position.WGS84.longitude,
+      zoom: 6,
     }
+
+    setViewState(updatedViewState)
+    setCriticalPlaneVisible(true)
   }
 
   const fetchAircrafts = async () => {
@@ -142,16 +148,24 @@ export default function App({
 
   const fetchCriticalAircraft = async () => {
     const response = await fetch(
-      'http://johanndiep:9900/api/objects/aircrafts/VRFFederateHandle<5>:1078',
+      'http://johanndiep:9900/api/objects/aircrafts/VRFFederateHandle<5>:1082',
     )
 
     const aircraft = await response.json()
     setCriticialPlaneData([aircraft])
-  }
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress)
-  }, [])
+    const inside = computeRayTracing(
+      [
+        aircraft.spatial.position.WGS84.longitude,
+        aircraft.spatial.position.WGS84.latitude,
+      ],
+      FLIGHT_ZONE,
+    )
+
+    if (inside) {
+      handleAlert()
+    }
+  }
 
   useEffect(() => {
     fetchAircrafts()
@@ -203,9 +217,20 @@ export default function App({
     sizeScale: 250,
   })
 
+  const FlightZone = new GeoJsonLayer({
+    id: 'FlightZoneLayer',
+    data: Polygon,
+    lineWidthMinPixels: 1,
+    getLineColor: [0, 255, 255, 90],
+  })
+
   return (
     <DeckGL
-      layers={criticalPlaneVisible ? [CriticalPlane, Planes] : [Planes]}
+      layers={
+        criticalPlaneVisible
+          ? [FlightZone, CriticalPlane, Planes]
+          : [FlightZone, Planes]
+      }
       initialViewState={viewState}
       controller={true}
     >
