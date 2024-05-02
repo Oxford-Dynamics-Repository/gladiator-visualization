@@ -1,7 +1,12 @@
+import ast
 from datetime import datetime
+import queue
+import threading
+import time
 from influxdb_client import InfluxDBClient, BucketsApi, OrganizationsApi, UsersApi
 from influxdb_client.client.write_api import SYNCHRONOUS
 import json
+import requests
 
 
 class PopulateInfluxDB():
@@ -57,10 +62,37 @@ class PopulateInfluxDB():
             except Exception as err:
                 print("Error with writing to DB\n" + err)
         print("Data written successfully")
+    
+    # Function to continuously query endpoint and enqueue data
+    def endpoint_query_and_enqueue(self, queue, url):
+        while True:
+            response = requests.request("GET", url, data="")
+            clean_response = ast.literal_eval(response.text)
+            queue.put(clean_response)
+            # Query endpoint every second
+            time.sleep(1)
+
+    # Function to dequeue data and write to database
+    def dequeue_and_db_write(self, queue):
+        while True:
+            data = queue.get()
+            self.save_to_influxdb(data)
+
 
 if __name__ == "__main__":
-    influxObj = PopulateInfluxDB()
-    with open("/home/stefan/gladiator-visualization/test_file.json") as jf:
-        data_list = json.load(jf)
 
-    influxObj.save_to_influxdb(data_list)
+    influxObj = PopulateInfluxDB()
+    data_queue = queue.Queue()
+    url = "http://johanndiep:9900/api/objects/aircrafts/"
+
+    # Start separate threads for querying and writing
+    query_thread = threading.Thread(target=influxObj.endpoint_query_and_enqueue, args=(data_queue, url,))
+    write_thread = threading.Thread(target=influxObj.dequeue_and_db_write, args=(data_queue,))
+
+    query_thread.start()
+    write_thread.start()
+    # Wait for threads to finish
+    # (thread is set to while True, so needs to be interrupted by command)
+    query_thread.join()
+    write_thread.join()
+
