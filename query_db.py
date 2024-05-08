@@ -1,3 +1,4 @@
+import json
 import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
 import pandas as pd
@@ -10,15 +11,25 @@ class QueryInfluxDB(PopulateInfluxDB):
         super().__init__()
         self.query_api = self.client.query_api()
 
-    def query_timebound(self):
+    def query_timebound(self, start_date, stop_date):
         query = """from(bucket: "GLADIATOR")
-        |> range(start: 2024-04-10, stop: 2024-04-12)
-        |> filter(fn:(r) => r._field == "spatial_latitude" or r._field == "spatial_longitude" or r._field == "spatial_altitude")
+        |> range(start: {start_date}, stop: {stop_date})
+        |> filter(fn:(r) => r._field == "spatial_latitude" or r._field == "spatial_longitude" or r._field == "spatial_altitude" or r.tags == "entityIdentifier")
         |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
-        """
+        """.format(start_date=start_date, stop_date=stop_date)
         
         result = self.query_api.query_data_frame(org=self.org_name, query=query)
         return result
+    
+    def detect_missing_aircraft(self, db_results):
+        with open(self.monitored_aircraft_file, "r") as jf:
+            monitored_aircraft = set(json.load(jf))
+        current_aircraft = []
+        for result in db_results:
+            current_aircraft.append(result["entityIdentifier"])
+        
+        return monitored_aircraft - set(current_aircraft)
+        
 
 if __name__ == "__main__":
     qeryObj = QueryInfluxDB()
