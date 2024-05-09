@@ -15,12 +15,9 @@ import { Input, Tooltip, Button, List } from 'antd'
 import { SearchOutlined, UpSquareOutlined } from '@ant-design/icons'
 
 import { openai, MAP_STYLE, INITIAL_VIEW_STATE, FLIGHT_ZONE } from './var.tsx'
-import {
-  computeLocalTangentPlaneRotationMatrix,
-  applyRotationMatrix,
-  computeRayCasting,
-} from './utils.tsx'
-import Polygon from './data/Checkpoints_3.json'
+import { computeRayCasting, checkAirplaneClass } from './utils.tsx'
+import Polygon from './data/FlightZone.json'
+import Line from './data/CivilianTrajectory.json'
 
 export default function App({
   mapStyle = MAP_STYLE,
@@ -175,21 +172,11 @@ export default function App({
       d.spatial.position.WGS84.latitude,
     ],
     getOrientation: (d) => {
-      const rollECEF = d.spatial.orientation.phi * (180 / Math.PI)
-      const pitchECEF = d.spatial.orientation.psi * (180 / Math.PI)
-      const yawECEF = d.spatial.orientation.theta * (180 / Math.PI)
+      const roll = d.spatial.orientation.phi * (180 / Math.PI)
+      const pitch = d.spatial.orientation.psi * (180 / Math.PI)
+      const yaw = d.spatial.orientation.theta * (180 / Math.PI)
 
-      const rotationMatrix = computeLocalTangentPlaneRotationMatrix(
-        d.spatial.position.WGS84.latitude,
-        d.spatial.position.WGS84.longitude,
-      )
-      const [roll, pitch, yaw] = applyRotationMatrix(rotationMatrix, [
-        rollECEF,
-        pitchECEF,
-        yawECEF,
-      ])
-
-      return [0, 180 + yaw, 90]
+      return [yaw + 180, pitch, -90]
     },
     scenegraph: './models/Plane.glb',
     sizeScale: 250,
@@ -199,15 +186,22 @@ export default function App({
     id: 'FlightZoneLayer',
     data: Polygon,
     lineWidthMinPixels: 1,
-    getLineColor: [0, 255, 255, 90],
+    getLineColor: [0, 0, 255, 90],
+  })
+
+  const CivilianTrajectory = new GeoJsonLayer({
+    id: 'CivilianTrajectoryLayer',
+    data: Line,
+    lineWidthMinPixels: 1,
+    getLineColor: [255, 0, 0, 90],
   })
 
   return (
     <DeckGL
       layers={
         criticalPlaneVisible
-          ? [FlightZone, CriticalPlane, Planes]
-          : [FlightZone, Planes]
+          ? [FlightZone, CivilianTrajectory, CriticalPlane, Planes]
+          : [FlightZone, CivilianTrajectory, Planes]
       }
       initialViewState={viewState}
       controller={true}
