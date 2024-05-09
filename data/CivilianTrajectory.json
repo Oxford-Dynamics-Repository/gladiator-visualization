@@ -1,0 +1,20 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Civilian Trajectory" },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [-3.3366667, 57.7045],
+            [-2.673, 56.9786667],
+            [-3.0538333, 56.6913333],
+            [-3.2355, 55.9675]
+          ]
+        ]
+      }
+    }
+  ]
+}
