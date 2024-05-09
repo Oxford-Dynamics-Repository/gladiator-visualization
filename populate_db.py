@@ -82,6 +82,7 @@ class PopulateInfluxDB():
             response = requests.request("GET", url, data="")
             clean_response = ast.literal_eval(response.text)
             queue.put(clean_response)
+            print("--> IN QUEUE: " + datetime.now())
             # Query endpoint every second
             time.sleep(1)
 
@@ -89,6 +90,7 @@ class PopulateInfluxDB():
     def dequeue_and_db_write(self, queue):
         while True:
             data = queue.get()
+            print("<-- OUT QUEUE: " + datetime.now())
             self.save_to_influxdb(data)
 
 
