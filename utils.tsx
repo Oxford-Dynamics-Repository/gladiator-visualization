@@ -47,10 +47,10 @@ export function computeRayCasting(point: any, polygon: any) {
      - "Friendly" if the airplane belongs to the class "Friendly".
      - "None" if the airplane name is not found in the hashtable.
 */
-export function checkAirplaneClass(airplaneName: any) {
-  if (airplaneClasses.hasOwnProperty(airplaneName)) {
-    return airplaneClasses[airplaneName]
+export function checkAirplaneClass(airplane: any) {
+  if (airplane.forceIdentifier == "Friendly") {
+    return false
   } else {
-    return 'None'
+    return true
   }
 }

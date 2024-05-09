@@ -113,7 +113,7 @@ export default function App({
   }
 
   const fetchAircrafts = async () => {
-    const response = await fetch('http://johanndiep:9900/api/objects/aircrafts')
+    const response = await fetch('http://localhost:9900/api/objects/aircrafts')
 
     const aircrafts = await response.json()
     setPlaneData(aircrafts)
@@ -122,9 +122,26 @@ export default function App({
   var firstDisplay = true
   const fetchCriticalAircraft = async () => {
     const response = await fetch(
-      'http://johanndiep:9900/api/objects/aircrafts/VRFFederateHandle<5>:1082',
+      'http://localhost:9900/api/objects/aircrafts',
     )
 
+    await response.json().then(aircrafts => {
+      for (let i = 0; i < aircrafts.length; i++) {
+        if (checkAirplaneClass(aircrafts[i])) {
+          setCriticialPlaneData([aircrafts[i]])
+
+          const inside = computeRayCasting(
+            [
+            aircrafts[i].spatial.position.WGS84.longitude,
+            aircrafts[i].spatial.position.WGS84.latitude,
+            ],
+            FLIGHT_ZONE,
+          )
+        }
+      }
+    })
+    
+    /*
     const aircraft = await response.json()
     setCriticialPlaneData([aircraft])
 
@@ -139,12 +156,12 @@ export default function App({
     if (inside && firstDisplay) {
       handleAlert()
       firstDisplay = false
-    }
+    }*/
   }
 
   useEffect(() => {
     fetchAircrafts()
-    setInterval(fetchAircrafts, 300)
+    setInterval(fetchAircrafts, 10)
   }, [])
 
   useEffect(() => {
