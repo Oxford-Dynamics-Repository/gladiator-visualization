@@ -1,6 +1,5 @@
 import ast
 from datetime import datetime
-import os
 import queue
 import threading
 import time
@@ -11,30 +10,18 @@ import requests
 
 
 class PopulateInfluxDB():
-    def __init__(self, gladiator_url) -> None:
+    def __init__(self) -> None:
         self.url ="http://localhost:8086"
-        self.token = "WEDZvJzihblds_E1aSMTyYGMGYsk5rVenm652NJ5454x9al3VQRIpWl49_ogVKG6WAOWTs1hfxKCjEb1vMI0Rw=="
+        self.token = "5ZCHTFdoksYQ2M8PiKDV5p2_X2vK_KuGdNHJ9K8fKeuCYVayUE8psk8lOPu7RRzG_S6jX-cVOgtXWi_Z9XBfJA=="
         self.org_name = "oxdynamics"
         self.bucket = "GLADIATOR"
         self.client = InfluxDBClient(url=self.url, token=self.token, org=self.org_name)
-        self.monitored_aircraft_file = os.getcwd() + "/monitored_aircraft.json"
-        self.monitored_aircraft_list(gladiator_url)
  
     def str_time_to_datetime(self, date_str):
         date_obj = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S.%f")
         influxdb_timestamp = date_obj.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         return influxdb_timestamp
-    
-    def monitored_aircraft_list(self, url):
-        response = requests.request("GET", url, data="")
-        clean_response = ast.literal_eval(response.text)
-        aircraft_list = []
-        for aircraft_data in clean_response:
-            aircraft_list.append(aircraft_data["entityIdentifier"])
-        
-        with open(self.monitored_aircraft_file, "w") as jf:
-            json.dump({"aircraft": aircraft_list}, jf)
 
     def save_to_influxdb(self, data_list):
         write_api = self.client.write_api(write_options=SYNCHRONOUS)
@@ -82,7 +69,6 @@ class PopulateInfluxDB():
             response = requests.request("GET", url, data="")
             clean_response = ast.literal_eval(response.text)
             queue.put(clean_response)
-            print("--> IN QUEUE: " + datetime.now())
             # Query endpoint every second
             time.sleep(1)
 
@@ -90,18 +76,17 @@ class PopulateInfluxDB():
     def dequeue_and_db_write(self, queue):
         while True:
             data = queue.get()
-            print("<-- OUT QUEUE: " + datetime.now())
             self.save_to_influxdb(data)
 
 
 if __name__ == "__main__":
 
-    gladiator_url = "http://johanndiep:9900/api/objects/aircrafts/"
-    influxObj = PopulateInfluxDB(gladiator_url)
+    influxObj = PopulateInfluxDB()
     data_queue = queue.Queue()
+    url = "http://localhost:9900/api/objects/aircrafts"
 
     # Start separate threads for querying and writing
-    query_thread = threading.Thread(target=influxObj.endpoint_query_and_enqueue, args=(data_queue, gladiator_url,))
+    query_thread = threading.Thread(target=influxObj.endpoint_query_and_enqueue, args=(data_queue, url,))
     write_thread = threading.Thread(target=influxObj.dequeue_and_db_write, args=(data_queue,))
 
     query_thread.start()

@@ -14,7 +14,7 @@ class QueryInfluxDB(PopulateInfluxDB):
     def query_timebound(self, start_date, stop_date):
         query = """from(bucket: "GLADIATOR")
         |> range(start: {start_date}, stop: {stop_date})
-        |> filter(fn:(r) => r._field == "spatial_latitude" or r._field == "spatial_longitude" or r._field == "spatial_altitude" or r.tags == "entityIdentifier")
+        |> filter(fn:(r) => r["_field"] == "spatial_latitude" or r["_field"] == "spatial_longitude" or r["_field"] == "spatial_altitude")
         |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
         """.format(start_date=start_date, stop_date=stop_date)
         
@@ -33,5 +33,7 @@ class QueryInfluxDB(PopulateInfluxDB):
 
 if __name__ == "__main__":
     qeryObj = QueryInfluxDB()
-    results_list = qeryObj.query_timebound()
-    print(results_list)
+    start_time = "2024-05-08T00:00:00Z"
+    stop_time = "2024-05-10T00:00:00Z"
+    results_list = qeryObj.query_timebound(start_time, stop_time)
+    print(results_list.tail(1))
