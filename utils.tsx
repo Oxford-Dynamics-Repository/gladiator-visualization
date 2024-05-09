@@ -4,8 +4,6 @@
   This script contains multiple helper functions.
 */
 
-import { airplaneClasses } from './var.tsx'
-
 /*
   Function to compute ray casting to determine if a point is inside a polygon.
   Works within a small region, otherwise require spherical interpolation.
@@ -48,7 +46,7 @@ export function computeRayCasting(point: any, polygon: any) {
      - "None" if the airplane name is not found in the hashtable.
 */
 export function checkAirplaneClass(airplane: any) {
-  if (airplane.forceIdentifier == "Friendly") {
+  if (airplane.forceIdentifier == 'Friendly') {
     return false
   } else {
     return true

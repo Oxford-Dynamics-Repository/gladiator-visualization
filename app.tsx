@@ -121,26 +121,24 @@ export default function App({
 
   var firstDisplay = true
   const fetchCriticalAircraft = async () => {
-    const response = await fetch(
-      'http://localhost:9900/api/objects/aircrafts',
-    )
+    const response = await fetch('http://localhost:9900/api/objects/aircrafts')
 
-    await response.json().then(aircrafts => {
+    await response.json().then((aircrafts) => {
       for (let i = 0; i < aircrafts.length; i++) {
         if (checkAirplaneClass(aircrafts[i])) {
           setCriticialPlaneData([aircrafts[i]])
 
           const inside = computeRayCasting(
             [
-            aircrafts[i].spatial.position.WGS84.longitude,
-            aircrafts[i].spatial.position.WGS84.latitude,
+              aircrafts[i].spatial.position.WGS84.longitude,
+              aircrafts[i].spatial.position.WGS84.latitude,
             ],
             FLIGHT_ZONE,
           )
         }
       }
     })
-    
+
     /*
     const aircraft = await response.json()
     setCriticialPlaneData([aircraft])
