@@ -24,7 +24,7 @@ export default function App({
   initialViewState = INITIAL_VIEW_STATE,
 }) {
   const [PlaneData, setPlaneData] = useState<any>([])
-  const [CriticalPlaneData, setCriticialPlaneData] = useState<any>([])
+  const [criticalPlaneData, setCriticialPlaneData] = useState<any>([])
   const [showResults, setShowResults] = useState(false)
   const [viewState, setViewState] = useState(initialViewState)
   const [criticalPlaneVisible, setCriticalPlaneVisible] = useState(false)
@@ -43,6 +43,10 @@ export default function App({
   const handleClose = () => {
     setShowResults(false)
     setShowAlert(false)
+    setAnswer(
+      'Give me a moment to assess the airspace and ' +
+        'generate a response towards your query.'
+    )
   }
 
   const handleEnter = (event: any) => {
@@ -55,7 +59,11 @@ export default function App({
     if (query.trim() !== '') {
       setShowResults(true)
       setTitle(query)
-
+      setAnswer(
+        'Give me a moment to assess the airspace and ' +
+          'generate a response towards your query.'
+      )
+      
       const response = await openai.chat.completions.create({
         model: 'gpt-4-turbo',
         messages: [
@@ -65,16 +73,18 @@ export default function App({
               'You are an AI for air traffic surveillance. ' +
               'You will receive a JSON with data of different aircrafts. ' +
               'Your job is to answer the user query given JSON data. ' +
-              'Please answer the question in a text paragraph without bulletpoints or listings. ' +
-              'Here is the JSON data:\n' +
-              '${JSON.stringify(PlaneData)}',
+              'Please answer the question in a short text paragraph without bulletpoints or listings. ' +
+              'Here is the JSON data of all the aircrafts in the sky:\n' +
+              `${JSON.stringify(PlaneData)}` + "\n" +
+              "Here is the JSON data of all the opposing aircrafts in the sky:\n" +
+              `${JSON.stringify(criticalPlaneData)}`,
           },
           {
             role: 'user',
             content: query,
           },
         ],
-        max_tokens: 500,
+        max_tokens: 200,
       })
 
       const messageContent = response.choices[0].message.content
@@ -91,21 +101,11 @@ export default function App({
   const handleAlert = async (insideAircrafts: any) => {
     setShowResults(true)
     setTitle('Automated Notification')
-
-    if (insideAircrafts.length == 1) {
-      setAnswer(
-        'AVIS has detected one malicious aircraft maneuver. ' +
-          'The aircraft has entered a protected flight zone. ' +
-          'Please investigate immediately by querying AVIS for more information.',
-      )
-    }
-    else {
-      setAnswer(
-        'AVIS has detected multiple malicious aircraft maneuvers. ' +
-          'The aircrafts have entered a protected flight zone. ' +
-          'Please investigate immediately by querying AVIS for more information.',
-      )
-    }
+    setAnswer(
+      'AVIS has detected malicious aircraft maneuvers. ' +
+        'The aircraft or aircrafts have entered a protected flight zone. ' +
+        'Please investigate immediately by querying AVIS for more information.',
+    )
 
     const updatedViewState = {
       ...viewState,
@@ -168,7 +168,7 @@ export default function App({
   
   const CriticalPlane = new ScatterplotLayer({
     id: 'CriticalPlaneLayer',
-    data: CriticalPlaneData,
+    data: criticalPlaneData,
     getPosition: (d) => [
       d.spatial.position.WGS84.longitude,
       d.spatial.position.WGS84.latitude,
@@ -285,7 +285,7 @@ export default function App({
           onClick={handleClose}
           style={{
             position: 'absolute',
-            top: '80px',
+            top: '65px',
             left: '50vw',
             color: '#000',
             zIndex: '1',
@@ -294,17 +294,21 @@ export default function App({
         <List
           itemLayout="horizontal"
           dataSource={[{ title, answer }]}
-          style={{ width: '40vw' }}
+          style={{ width: '80vw' }}
           renderItem={(item, index) => (
             <List.Item>
               <List.Item.Meta
-                title={item.title}
-                description={item.answer.split('\n').map((line, idx) => (
-                  <React.Fragment key={idx}>
-                    {line}
-                    <br />
-                  </React.Fragment>
-                ))}
+                title={<div style={{ textAlign: 'center' }}>{item.title}</div>}
+                description={
+                  <div style={{ textAlign: 'center' }}>
+                    {item.answer.split('\n').map((line, idx) => (
+                      <React.Fragment key={idx}>
+                        {line}
+                        <br />
+                      </React.Fragment>
+                    ))}
+                  </div>
+                }
               />
             </List.Item>
           )}
