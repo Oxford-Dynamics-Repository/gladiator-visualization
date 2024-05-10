@@ -30,6 +30,7 @@ export default function App({
   const [criticalPlaneVisible, setCriticalPlaneVisible] = useState(false)
   const [query, setQuery] = useState('')
   const [title, setTitle] = useState('')
+  const [showAlert, setShowAlert] = useState(true)
   const [answer, setAnswer] = useState(
     'Give me a moment to assess the airspace and ' +
       'generate a response towards your query.',
@@ -41,7 +42,7 @@ export default function App({
 
   const handleClose = () => {
     setShowResults(false)
-    setCriticalPlaneVisible(false)
+    setShowAlert(false)
   }
 
   const handleEnter = (event: any) => {
@@ -87,29 +88,36 @@ export default function App({
     }
   }
 
-  const handleAlert = async () => {
+  const handleAlert = async (insideAircrafts: any) => {
     setShowResults(true)
     setTitle('Automated Notification')
-    setAnswer(
-      'AVIS has detected a malicious aircraft maneuver. ' +
-        'The aircraft has veered outside its designated flight zone. ' +
-        'Please investigate immediately.',
-    )
 
-    const response = await fetch(
-      'http://johanndiep:9900/api/objects/aircrafts/VRFFederateHandle<5>:1078',
-    )
-    const aircraft = await response.json()
+    if (insideAircrafts.length == 1) {
+      setAnswer(
+        'AVIS has detected one malicious aircraft maneuver. ' +
+          'The aircraft has entered a protected flight zone. ' +
+          'Please investigate immediately by querying AVIS for more information.',
+      )
+    }
+    else {
+      setAnswer(
+        'AVIS has detected multiple malicious aircraft maneuvers. ' +
+          'The aircrafts have entered a protected flight zone. ' +
+          'Please investigate immediately by querying AVIS for more information.',
+      )
+    }
 
     const updatedViewState = {
       ...viewState,
-      latitude: aircraft.spatial.position.WGS84.latitude + 0.5,
-      longitude: aircraft.spatial.position.WGS84.longitude,
+      latitude: insideAircrafts[0].spatial.position.WGS84.latitude + 0.5,
+      longitude: insideAircrafts[0].spatial.position.WGS84.longitude,
       zoom: 6,
     }
-
     setViewState(updatedViewState)
-    setCriticalPlaneVisible(true)
+
+    for (let i = 0; i < insideAircrafts.length; i++) {
+      setCriticalPlaneVisible(true)
+    }
   }
 
   const fetchAircrafts = async () => {
@@ -119,15 +127,14 @@ export default function App({
     setPlaneData(aircrafts)
   }
 
-  var firstDisplay = true
-  const fetchCriticalAircraft = async () => {
+  const fetchCriticalAircrafts = async () => {
     const response = await fetch('http://localhost:9900/api/objects/aircrafts')
+
+    let insideAircrafts: any[] = []
 
     await response.json().then((aircrafts) => {
       for (let i = 0; i < aircrafts.length; i++) {
         if (checkAirplaneClass(aircrafts[i])) {
-          setCriticialPlaneData([aircrafts[i]])
-
           const inside = computeRayCasting(
             [
               aircrafts[i].spatial.position.WGS84.longitude,
@@ -135,38 +142,30 @@ export default function App({
             ],
             FLIGHT_ZONE,
           )
+
+          if (inside) {
+            insideAircrafts.push(aircrafts[i]);
+          }
+        }
+      }
+
+      if (insideAircrafts.length > 0) {
+        setCriticialPlaneData(insideAircrafts);
+        if (showAlert) {
+          handleAlert(insideAircrafts);
         }
       }
     })
-
-    /*
-    const aircraft = await response.json()
-    setCriticialPlaneData([aircraft])
-
-    const inside = computeRayCasting(
-      [
-        aircraft.spatial.position.WGS84.longitude,
-        aircraft.spatial.position.WGS84.latitude,
-      ],
-      FLIGHT_ZONE,
-    )
-
-    if (inside && firstDisplay) {
-      handleAlert()
-      firstDisplay = false
-    }*/
   }
 
   useEffect(() => {
     fetchAircrafts()
-    setInterval(fetchAircrafts, 10)
-  }, [])
+  }, [PlaneData])
 
   useEffect(() => {
-    fetchCriticalAircraft()
-    setInterval(fetchCriticalAircraft, 100)
-  }, [])
-
+    fetchCriticalAircrafts()
+  }, [PlaneData]); 
+  
   const CriticalPlane = new ScatterplotLayer({
     id: 'CriticalPlaneLayer',
     data: CriticalPlaneData,
@@ -175,8 +174,8 @@ export default function App({
       d.spatial.position.WGS84.latitude,
     ],
     getRadius: 20,
-    getFillColor: [255, 100, 100],
-    radiusScale: 1000,
+    getFillColor: [255, 100, 100, 50],
+    radiusScale: 1000
   })
 
   const Planes = new ScenegraphLayer({
@@ -215,7 +214,7 @@ export default function App({
     <DeckGL
       layers={
         criticalPlaneVisible
-          ? [FlightZone, CivilianTrajectory, CriticalPlane, Planes]
+          ? [FlightZone, CivilianTrajectory, Planes, CriticalPlane]
           : [FlightZone, CivilianTrajectory, Planes]
       }
       initialViewState={viewState}
