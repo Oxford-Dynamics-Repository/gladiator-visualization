@@ -45,7 +45,7 @@ export default function App({
     setShowAlert(false)
     setAnswer(
       'Give me a moment to assess the airspace and ' +
-        'generate a response towards your query.'
+        'generate a response towards your query.',
     )
   }
 
@@ -61,9 +61,9 @@ export default function App({
       setTitle(query)
       setAnswer(
         'Give me a moment to assess the airspace and ' +
-          'generate a response towards your query.'
+          'generate a response towards your query.',
       )
-      
+
       const response = await openai.chat.completions.create({
         model: 'gpt-4-turbo',
         messages: [
@@ -75,8 +75,9 @@ export default function App({
               'Your job is to answer the user query given JSON data. ' +
               'Please answer the question in a short text paragraph without bulletpoints or listings. ' +
               'Here is the JSON data of all the aircrafts in the sky:\n' +
-              `${JSON.stringify(PlaneData)}` + "\n" +
-              "Here is the JSON data of all the opposing aircrafts in the sky:\n" +
+              `${JSON.stringify(PlaneData)}` +
+              '\n' +
+              'Here is the JSON data of all the opposing aircrafts in the sky:\n' +
               `${JSON.stringify(criticalPlaneData)}`,
           },
           {
@@ -144,15 +145,15 @@ export default function App({
           )
 
           if (inside) {
-            insideAircrafts.push(aircrafts[i]);
+            insideAircrafts.push(aircrafts[i])
           }
         }
       }
 
       if (insideAircrafts.length > 0) {
-        setCriticialPlaneData(insideAircrafts);
+        setCriticialPlaneData(insideAircrafts)
         if (showAlert) {
-          handleAlert(insideAircrafts);
+          handleAlert(insideAircrafts)
         }
       }
     })
@@ -164,8 +165,8 @@ export default function App({
 
   useEffect(() => {
     fetchCriticalAircrafts()
-  }, [PlaneData]); 
-  
+  }, [PlaneData])
+
   const CriticalPlane = new ScatterplotLayer({
     id: 'CriticalPlaneLayer',
     data: criticalPlaneData,
@@ -175,7 +176,7 @@ export default function App({
     ],
     getRadius: 20,
     getFillColor: [255, 100, 100, 50],
-    radiusScale: 1000
+    radiusScale: 1000,
   })
 
   const Planes = new ScenegraphLayer({
