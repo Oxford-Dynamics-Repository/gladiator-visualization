@@ -78,7 +78,9 @@ export default function App({
               `${JSON.stringify(PlaneData)}` +
               '\n' +
               'Here is the JSON data of all the opposing aircrafts in the sky:\n' +
-              `${JSON.stringify(criticalPlaneData)}`,
+              `${JSON.stringify(criticalPlaneData)}` +
+              "\n" + 
+              "Note that all the malicious airplanes start at Kinloss Airport."
           },
           {
             role: 'user',
@@ -286,7 +288,7 @@ export default function App({
           onClick={handleClose}
           style={{
             position: 'absolute',
-            top: '65px',
+            top: '60px',
             left: '50vw',
             color: '#000',
             zIndex: '1',
