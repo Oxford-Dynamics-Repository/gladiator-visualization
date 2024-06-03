@@ -28,6 +28,8 @@ class QueryInfluxDB(PopulateInfluxDB):
         for result in db_results:
             current_aircraft.append(result["entityIdentifier"])
         
+        # relies on assumption that "monitored_aircraft" is the full list
+        # and "current_aircraft" is <= "monitored_aircraft"
         return monitored_aircraft - set(current_aircraft)
         
 

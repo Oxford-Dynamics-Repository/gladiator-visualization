@@ -94,8 +94,7 @@ class PopulateInfluxDB():
             self.save_to_influxdb(data)
 
 
-if __name__ == "__main__":
-
+def populate_main():
     gladiator_url = "http://localhost:9900/api/objects/aircrafts"
     influxObj = PopulateInfluxDB(gladiator_url)
     data_queue = queue.Queue()
