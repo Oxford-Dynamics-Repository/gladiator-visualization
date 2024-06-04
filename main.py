@@ -21,8 +21,9 @@ class Query(BaseModel):
     description: Optional[str] = None
 
 @app.post("/populate", response_model=Populate)
-def populate():
-    populate_main()
+def populate(token):
+    # Token is taken from InfluxDB UI (ex: "5ZCHTFdoksYQ2M8PiKDV5p2_X2vK_KuGdNHJ9K8fKeuCYVayUE8psk8lOPu7RRzG_S6jX-cVOgtXWi_Z9XBfJA==")
+    populate_main(str(token))
     return Populate(error=None, description="Listening to PitchRTI and populating DB at http://localhost:8086")
 
 @app.post("/query", response_model=Query)
@@ -30,7 +31,7 @@ def query(start_time, stop_time):
     try:
         qeryObj = QueryInfluxDB()
         results_list = qeryObj.query_timebound(start_time, stop_time)
-        return Query(error=None, payload=[results_list.tail(1)], description="")
+        return Query(error=None, payload=[results_list], description="")
     except Exception as err:
         error = err
         return Query(error=error, payload=None, description="")

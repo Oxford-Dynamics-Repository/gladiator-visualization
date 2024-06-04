@@ -11,9 +11,9 @@ import requests
 
 
 class PopulateInfluxDB():
-    def __init__(self, gladiator_url) -> None:
+    def __init__(self, gladiator_url, token) -> None:
         self.url ="http://localhost:8086"
-        self.token = "5ZCHTFdoksYQ2M8PiKDV5p2_X2vK_KuGdNHJ9K8fKeuCYVayUE8psk8lOPu7RRzG_S6jX-cVOgtXWi_Z9XBfJA=="
+        self.token = token
         self.org_name = "oxdynamics"
         self.bucket = "GLADIATOR"
         self.client = InfluxDBClient(url=self.url, token=self.token, org=self.org_name)
@@ -94,9 +94,10 @@ class PopulateInfluxDB():
             self.save_to_influxdb(data)
 
 
-def populate_main():
+def populate_main(token):
     gladiator_url = "http://localhost:9900/api/objects/aircrafts"
-    influxObj = PopulateInfluxDB(gladiator_url)
+    # token = "5ZCHTFdoksYQ2M8PiKDV5p2_X2vK_KuGdNHJ9K8fKeuCYVayUE8psk8lOPu7RRzG_S6jX-cVOgtXWi_Z9XBfJA=="
+    influxObj = PopulateInfluxDB(gladiator_url, token)
     data_queue = queue.Queue()
 
     # Start separate threads for querying and writing
