@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Any
 from populate_db import populate_main
 from query_db import QueryInfluxDB
 from datetime import datetime, timedelta, timezone
@@ -12,12 +12,12 @@ app = FastAPI()
 data_store = []
 
 class Populate(BaseModel):
-    error: str
+    error: Optional[str] = None
     description: Optional[str] = None
 
 class Query(BaseModel):
-    error: str
-    payload: List[str]
+    error: List[str]
+    payload: Optional[List[Any]]
     description: Optional[str] = None
 
 @app.post("/populate", response_model=Populate)
@@ -27,18 +27,17 @@ def populate(token):
     return Populate(error=None, description="Listening to PitchRTI and populating DB at http://localhost:8086")
 
 @app.post("/query", response_model=Query)
-def query(start_time, stop_time):
+def query(start_time, stop_time, token):
     try:
-        qeryObj = QueryInfluxDB()
+        qeryObj = QueryInfluxDB(token)
         results_list = qeryObj.query_timebound(start_time, stop_time)
-        return Query(error=None, payload=[results_list], description="")
+        return Query(error=[], payload=results_list, description="")
     except Exception as err:
-        error = err
-        return Query(error=error, payload=None, description="")
+        return Query(error=[str(err)], payload=None, description="")
 
 @app.post("/monitor", response_model=Query)
-def monitor():
-    qeryObj = QueryInfluxDB()
+def monitor(token):
+    qeryObj = QueryInfluxDB(token)
 
     current_datetime = datetime.now(timezone.utc)
     curr_dt_format = current_datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -54,6 +53,6 @@ def monitor():
         return Query(error=error, payload=None, description="")
 
     
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run(app, host="0.0.0.0", port=8000)

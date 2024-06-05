@@ -11,14 +11,15 @@ import requests
 
 
 class PopulateInfluxDB():
-    def __init__(self, gladiator_url, token) -> None:
+    def __init__(self, token) -> None:
+        self.gladiator_url = "http://localhost:9900/api/objects/aircrafts"
         self.url ="http://localhost:8086"
         self.token = token
         self.org_name = "oxdynamics"
         self.bucket = "GLADIATOR"
         self.client = InfluxDBClient(url=self.url, token=self.token, org=self.org_name)
         self.monitored_aircraft_file = os.getcwd() + "/monitored_aircraft.json"
-        self.monitored_aircraft_list(gladiator_url)
+        self.monitored_aircraft_list(self.gladiator_url)
  
     def str_time_to_datetime(self, date_str):
         date_obj = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S.%f")
@@ -77,9 +78,9 @@ class PopulateInfluxDB():
         print("Data written successfully")
     
     # Function to continuously query endpoint and enqueue data
-    def endpoint_query_and_enqueue(self, queue, url):
+    def endpoint_query_and_enqueue(self, queue):
         while True:
-            response = requests.request("GET", url, data="")
+            response = requests.request("GET", self.gladiator_url, data="")
             clean_response = ast.literal_eval(response.text)
             queue.put(clean_response)
             print("--> IN QUEUE: " + datetime.now())
@@ -95,13 +96,12 @@ class PopulateInfluxDB():
 
 
 def populate_main(token):
-    gladiator_url = "http://localhost:9900/api/objects/aircrafts"
     # token = "5ZCHTFdoksYQ2M8PiKDV5p2_X2vK_KuGdNHJ9K8fKeuCYVayUE8psk8lOPu7RRzG_S6jX-cVOgtXWi_Z9XBfJA=="
-    influxObj = PopulateInfluxDB(gladiator_url, token)
+    influxObj = PopulateInfluxDB(token)
     data_queue = queue.Queue()
 
     # Start separate threads for querying and writing
-    query_thread = threading.Thread(target=influxObj.endpoint_query_and_enqueue, args=(data_queue, gladiator_url,))
+    query_thread = threading.Thread(target=influxObj.endpoint_query_and_enqueue, args=(data_queue,))
     write_thread = threading.Thread(target=influxObj.dequeue_and_db_write, args=(data_queue,))
 
     query_thread.start()

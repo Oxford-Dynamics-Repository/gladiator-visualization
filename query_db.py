@@ -7,8 +7,8 @@ from populate_db import PopulateInfluxDB
 
 
 class QueryInfluxDB(PopulateInfluxDB):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, token):
+        super().__init__(token)
         self.query_api = self.client.query_api()
 
     def query_timebound(self, start_date, stop_date):

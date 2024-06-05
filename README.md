@@ -51,4 +51,6 @@ The UI will produce a token -> copy it and pass it to the `/populate` endpoint l
 5. Run the `/query` endpoint, which takes 2 timestamps as the boundries of a timeframe and returns the results in that timeframe as a pandas DataFrame. The body params are:
     - `start_time: <ex: "2024-05-08T00:00:00Z">`
     - `stop_time: <ex: "2024-05-08T00:00:00Z">`
-6. Run the `/monitor` endpoint, which checks if any of the initial airplanes are missing, and return a set of the missing planes. Request body is empty.
+    - `token: <token collected in step 2>`
+6. Run the `/monitor` endpoint, which checks if any of the initial airplanes are missing, and return a set of the missing planes. Request body is:
+    - `token: <token collected in step 2>`
