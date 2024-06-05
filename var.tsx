@@ -23,7 +23,7 @@ export const INITIAL_VIEW_STATE = {
   latitude: 56.5,
   longitude: -0.7,
   zoom: 5,
-  transitionDuration: 2000,
+  transitionDuration: 500,
   transitionInterpolator: new FlyToInterpolator(),
 }
 
