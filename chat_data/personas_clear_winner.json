@@ -1,0 +1,48 @@
+{
+"personas":{
+    "Laura Bennett": {
+        "expertise": "Environmental Science",
+        "description": "Laura is an environmental scientist with expertise in climate change research and sustainable development. She has worked on multiple projects focused on reducing carbon footprints and promoting green energy."
+    },
+    "Michael Harris": {
+        "expertise": "Cybersecurity",
+        "description": "Michael is a cybersecurity expert with over 15 years of experience in protecting digital infrastructures. He specializes in threat analysis, network security, and ethical hacking."
+    },
+    "Sophia Ramirez": {
+        "expertise": "Healthcare Management",
+        "description": "Sophia has extensive experience in healthcare management, including hospital administration and healthcare policy. She has a strong background in improving healthcare delivery systems."
+    },
+    "Michael Pen": {
+        "expertise": "Space Mission Coordination",
+        "description": "Daniel has worked for 10+ years as a mission coordinator and planner for space applications. His work includes project managining on the Hubble telescope mission."
+    },
+    "Ethan Kim": {
+        "expertise": "Artificial Intelligence",
+        "description": "Ethan is a leading researcher in artificial intelligence, focusing on machine learning algorithms and their applications in various industries such as finance, healthcare, and autonomous systems."
+    },
+    "Olivia Martinez": {
+        "expertise": "International Business",
+        "description": "Olivia is an expert in international business with a focus on global market strategies and cross-cultural management. She has successfully led market expansion initiatives in Asia and Europe."
+    },
+    "James Wilson": {
+        "expertise": "Renewable Energy",
+        "description": "James is a renewable energy specialist with a background in solar and wind energy technologies. He has worked on numerous projects aimed at increasing the adoption of clean energy solutions."
+    },
+    "Ava Brown": {
+        "expertise": "Digital Marketing",
+        "description": "Ava is a digital marketing expert with a track record of creating a number of successful online campaigns. She has a deep understanding of SEO, social media marketing, and content strategy."
+    },
+    "Benjamin Clark": {
+        "expertise": "Urban Planning",
+        "description": "Benjamin is an urban planner who focuses on sustainable city development. His work involves designing urban spaces that promote environmental sustainability and improve the quality of life for residents."
+    },
+    "Chloe Davis": {
+        "expertise": "Financial Analysis",
+        "description": "Chloe is a financial analyst with a strong background in investment strategies and economic forecasting. She has helped numerous companies optimize their financial performance through detailed market analysis."
+    },
+    "Daniel Evans": {
+        "expertise": "Education Technology",
+        "description": "Daniel is an education technology specialist who develops innovative tools and platforms to enhance learning experiences. His work aims to integrate technology into traditional education systems effectively."
+    }
+}
+}

@@ -1,0 +1,44 @@
+{
+"personas":{
+    "Alice Johnson": {
+        "expertise": "Radar Systems and Electrical Engineering",
+        "description": "Alice is a leading expert in radar systems and electrical engineering with over 15 years of experience designing and optimizing radar technology for both military and civilian applications."
+    },
+    "Bob Smith": {
+        "expertise": "Satellite Industry Veteran",
+        "description": "Bob has over 20 years of experience working in the satellite industry, specializing in satellite design, launch operations, and in-orbit management."
+    },
+    "Catherine Lee": {
+        "expertise": "Economist",
+        "description": "Catherine is a renowned economist with a focus on the aerospace industry. She has published numerous papers on the economic impacts of satellite technology and space exploration."
+    },
+    "David Martinez": {
+        "expertise": "Aerospace Engineer",
+        "description": "David is an aerospace engineer who has worked on multiple high-profile satellite missions. His expertise includes satellite propulsion systems and orbital mechanics."
+    },
+    "Emma Thompson": {
+        "expertise": "Space Law",
+        "description": "Emma is a lawyer specializing in space law. She advises companies and governments on the legal aspects of space exploration, satellite deployment, and international space treaties."
+    },
+    "Franklin O'Connor": {
+        "expertise": "Software Engineering for Space Applications",
+        "description": "Franklin is an expert in software engineering, specifically for space applications. He has developed flight software for satellites and has a deep understanding of real-time operating systems."
+    },
+    "Grace Williams": {
+        "expertise": "Satellite Communications",
+        "description": "Grace has extensive experience in satellite communications, including the design and implementation of communication systems for both commercial and governmental satellites."
+    },
+    "Henry Patel": {
+        "expertise": "Astrophysics",
+        "description": "Henry is an astrophysicist who focuses on the scientific applications of satellite data. His work involves analyzing data from space telescopes and Earth observation satellites."
+    },
+    "Isabella Rossi": {
+        "expertise": "Project Management in Aerospace",
+        "description": "Isabella is a project manager with a decade of experience managing large-scale aerospace projects. She excels in coordinating interdisciplinary teams and ensuring project milestones are met."
+    },
+    "Jack Chen": {
+        "expertise": "Mechanical Engineering",
+        "description": "Jack is a mechanical engineer specializing in the design and manufacturing of satellite components. His expertise includes thermal control systems and structural integrity of space hardware."
+    }
+}
+}
